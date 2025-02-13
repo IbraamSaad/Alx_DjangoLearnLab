@@ -1,6 +1,3 @@
-for field in book.Book.objects.all():
-...     print(field.title)
-...     print (field.author)
-...     print (field.publication_year)
+Book.objects.get()
 
 [comment]: <> ('1984', 'George Orwell', 1949)
