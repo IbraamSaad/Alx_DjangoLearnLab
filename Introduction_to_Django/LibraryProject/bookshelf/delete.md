@@ -1,5 +1,5 @@
-book = Book.objects.all.delte()
+from bookkshelf.models import Book
 [comment]: <> (1, {'bookshelf.Book': 1})
 
-Book.ojects.all().delete()
+book.delete()
 [comment]: <> (0, {})
