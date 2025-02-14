@@ -1,2 +1,2 @@
-book=Book.objects.filter(author="Nineteen Eighty-Four")
+book.title="Nineteen Eighty-Four"
 [comment] <> (author="Nineteen Eighty-Four")
