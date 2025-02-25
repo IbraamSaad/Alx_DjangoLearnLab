@@ -49,20 +49,29 @@ def logout_view(request):
 
 def is_admin(user):
     if user.is_authenticated:
-        profile = UserProfile.objects.get(user=user)
-        return profile.role == 'Admin'
+        try:
+            profile = UserProfile.objects.get(user=user)
+            return profile.role == 'Admin'
+        except UserProfile.DoesNotExist:
+            return False #User does not have a profile
     return False
 
 def is_librarian(user):
     if user.is_authenticated:
-        profile = UserProfile.objects.get(user=user)
-        return profile.role == 'Librarian'
+        try:
+            profile = UserProfile.objects.get(user=user)
+            return profile.role == 'Librarian'
+        except UserProfile.DoesNotExist:
+            return False
     return False
 
 def is_member(user):
     if user.is_authenticated:
-        profile = UserProfile.objects.get(user=user)
-        return profile.role == 'Member'
+        try:
+            profile = UserProfile.objects.get(user=user)
+            return profile.role == 'Member'
+        except UserProfile.DoesNotExist:
+            return False
     return False
 
 @user_passes_test(is_admin)
