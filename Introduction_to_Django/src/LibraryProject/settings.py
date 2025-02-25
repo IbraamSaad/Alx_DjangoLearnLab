@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # own apps
-    'bookshelf'
+    'bookshelf',
 ]
 
 MIDDLEWARE = [
@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'LibraryProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'LibraryProject',  
-        'USER': 'root',
-        'PASSWORD': 'Ebr@#_012',
+        'NAME': 'ibram_website',  
+        'USER': 'ibram',
+        'PASSWORD': 'ibram',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {
