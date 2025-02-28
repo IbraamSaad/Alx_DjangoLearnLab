@@ -1,17 +1,16 @@
+from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect
-from django.views.generic.detail import DetailView, UpdateView
+from django.views.generic.detail import DetailView
 from .models import Library, Book
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.decorators import user_passes_test
-from .models import UserProfile
 
 # Create your views here.
 
 
 def list_books(request):
     books = Book.objects.all()
-     render(request, 'relationship_app/list_books.html', {'books': books})
+    return render(request, 'relationship_app/list_books.html', {'books': books})
 
 class LibraryDetailView(DetailView):
     model = Library
