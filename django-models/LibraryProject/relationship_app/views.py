@@ -11,11 +11,11 @@ from .models import UserProfile
 
 def list_books(request):
     books = Book.objects.all()
-    return render(request, 'relationship_app/templates/list_books.html', {'books': books})
+    return render(request, 'relationship_app/list_books.html', {'books': books})
 
 class LibraryDetailView(DetailView):
     model = Library
-    template_name = 'relationship_app/templates/library_detail.html'
+    template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
 def register(request):
@@ -27,7 +27,7 @@ def register(request):
             return redirect('list_books')  # Redirect to your book list view
     else:
         form = UserCreationForm()
-    return render(request, 'relationship_app/templates/register.html', {'form': form})
+    return render(request, 'relationship_app/register.html', {'form': form})
 
 def login_view(request):
     if request.method == 'POST':
