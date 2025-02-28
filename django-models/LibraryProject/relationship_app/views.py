@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.views.generic.detail import DetailView
 from .models import Library, Book
 from django.contrib.auth import login, logout, authenticate
@@ -37,7 +38,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('list_books')  # Redirect to your book list view
+                return redirect('list_books')  
     else:
         form = AuthenticationForm()
     return render(request, 'relationship_app/login.html', {'form': form})
