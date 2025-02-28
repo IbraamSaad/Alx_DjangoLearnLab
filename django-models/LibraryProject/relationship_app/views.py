@@ -11,7 +11,7 @@ from .models import UserProfile
 
 def list_books(request):
     books = Book.objects.all()
-    return render(request, 'relationship_app/list_books.html', {'books': books})
+     render(request, 'relationship_app/list_books.html', {'books': books})
 
 class LibraryDetailView(DetailView):
     model = Library
