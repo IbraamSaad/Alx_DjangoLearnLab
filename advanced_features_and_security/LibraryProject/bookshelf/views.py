@@ -1,5 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import staticmethod
+from .models import Book
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse
+
+
 
 # Create your views here.
 
@@ -11,3 +16,10 @@ from django.contrib.auth.decorators import staticmethod
         if user.is_staff:
             return True
         return False
+
+def book_list(request):
+    books = Book.objects.all()  
+    return render(request, 'bookshelf/book_list.html', {'books': books})
+
+def raise_exception():
+    raise PermissionDenied("You do not have permission to access this page.")
