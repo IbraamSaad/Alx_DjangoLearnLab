@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import staticmethod
 from .models import Book
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
-from django import forms
+from .forms import ExampleForm
 from .models import MyModel
 
 
