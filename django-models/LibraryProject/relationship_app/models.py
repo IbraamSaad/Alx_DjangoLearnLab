@@ -3,6 +3,17 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
+
+
+"""
+Create your custome usermode
+"""
+
+"""
+Create your custome BaseBackend
+"""
+
 # Create your models here.
 class Author(models.Model):
     name = models.CharField(max_length=50)
