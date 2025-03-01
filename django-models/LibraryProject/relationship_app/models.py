@@ -10,16 +10,19 @@ class Author(models.Model):
         return self.name
 
 class Book(models.Model):
-    title = models.CharField(max_length=50)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='book')
-    publication_year = models.IntegerField(null=True, blank=True)
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=100)
+    publication_date = models.DateField(null=True, blank=True)
+    isbn = models.CharField(max_length=13, unique=True, null=True, blank=True)
 
-    class meta:
+    class Meta:  
         permissions = [
             ("can_add_book", "Can add book"),
             ("can_change_book", "Can change book"),
             ("can_delete_book", "Can delete book"),
-        ]
+            ]
+        
+
     def __str__(self):
         return self.title
 
