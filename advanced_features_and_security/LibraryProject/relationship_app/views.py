@@ -6,6 +6,8 @@ from django.views.generic.detail import DetailView
 from .models import Library, Book
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django import forms
+from .models import MyModel
 
 # Create your views here.
 
@@ -113,6 +115,11 @@ def delete_book(request, pk):
         book.delete()
         return redirect('list_books') 
     return render(request, 'relationship_app/book_confirm_delete.html', {'book': book})
+
+class ExampleForm(forms.ModelForm):
+    class Meta:
+        model = MyModel
+        fields = ('field1', 'field2')
 
 
 

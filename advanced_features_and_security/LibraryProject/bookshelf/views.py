@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import staticmethod
 from .models import Book
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
+from django import forms
+from .models import MyModel
 
 
 
@@ -23,3 +25,8 @@ def book_list(request):
 
 def raise_exception():
     raise PermissionDenied("You do not have permission to access this page.")
+
+class ExampleForm(forms.ModelForm):
+    class Meta:
+        model = MyModel
+        fields = ('field1', 'field2')
