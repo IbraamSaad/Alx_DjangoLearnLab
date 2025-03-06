@@ -128,5 +128,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication', # enable base token authentication
+        # rest_framework.permissions.IsAuthenticated is used in api/views.py to control access.
     ],
 }
