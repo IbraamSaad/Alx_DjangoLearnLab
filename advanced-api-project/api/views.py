@@ -1,24 +1,33 @@
 from django.shortcuts import render
-from rest_framework import generics
-from . models import Author, Books
-from . serializers import BookSerializer, AuthorSerializer
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from .models import Book
 
-# Create your views here.
-class CustomAuthorCreateView(generics.CreateAPIView):
-	queryset = Author.objects.all()
-	serializer_class = AuthorSerializer
+class BookListView(ListView):
+    model = Book
+    template_name = 'book_list.html'  # Create this template
+    context_object_name = 'books'
 
+class BookDetailView(DetailView):
+    model = Book
+    template_name = 'book_detail.html' # Create this template
+    context_object_name = 'book'
 
-class CustomAuthorListView(generics.ListAPIView):
-	queryset = Author.objects.all()
-	serializer_class = AuthorSerializer
+class BookCreateView(CreateView):
+    model = Book
+    fields = ['title', 'author', 'publication_year'] # Specify the fields to include in the form
+    template_name = 'book_form.html' # Create this template
+    success_url = reverse_lazy('book_list') # Redirect after successful creation
 
+class BookUpdateView(UpdateView):
+    model = Book
+    fields = ['title', 'author', 'publication_year'] # Specify the fields to include in the form
+    template_name = 'book_form.html' # Create this template
+    success_url = reverse_lazy('book_list') # Redirect after successful update
 
-class CustomBookCreateView(generics.CreateAPIView):
-	queryset = Book.objects.all()
-	serializer_class = BookSerializer
+class BookDeleteView(DeleteView):
+    model = Book
+    template_name = 'book_confirm_delete.html' # Create this template
+    success_url = reverse_lazy('book_list')
+	
 
-
-class CustomBookListView(generics.ListAPIView):
-	queryset = Book.objects.all()
-	serializer_class = BookSerializer
