@@ -9,11 +9,11 @@ class BookSerializer(serializers.ModelSerializer):
 		model = Book
 		fields = '__all__' # all fields
 
-	# valdiate publication year
+	# serializers.ValidationError valdiate publication year
 	def valdiate_pulication_year(self, data):
 		year = datetime.now().year
 		if data > year:
-			raise serializers.valdiationError('unvalid publication_date')
+			raise serializers.ValidationError('unvalid publication_date')
 		return data
 
 
