@@ -9,7 +9,7 @@ class Author(models.Model):
 # Book model to be mapped in db
 class Book(models.Model):
 	title = models.CharField(max_length=100)
-	publication_date = models.IntegerField()
+	publication_year = models.IntegerField()
 	# foreign key for one to many
 	author = models.ForeignKey(Author, on_delete=models.CASCADE) 
 
