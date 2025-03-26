@@ -7,6 +7,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib import messages
 from .models import Post, Comment
 from django.urls import reverse_lazy, reverse
+from django.db.models import Q
+from taggit.models import Tag
+
 
 # Create your views here.
 def register(request):
@@ -169,4 +172,20 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         comment = self.get_object()
         return comment.author == self.request.user
+
+def tag_posts(request, tag_slug):
+    tag = get_object_or_404(Tag, slug=tag_slug)
+    posts = Post.objects.filter(tags=tag)
+    return render(request, 'post_list.html', {'posts': posts, 'tag': tag})
+
+def search_posts(request):
+    query = request.GET.get('q')
+    if query:
+        posts = Post.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query) | Q(tags__name__icontains=query)
+        ).distinct()
+    else:
+        posts = Post.objects.all()
+    return render(request, 'post_list.html', {'posts': posts, 'query': query})
+
 
