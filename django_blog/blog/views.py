@@ -134,6 +134,19 @@ def add_comment(request, post_id):
             return HttpResponseRedirect(reverse('post_detail', args=[post_id]))
     return HttpResponseRedirect(reverse('post_detail', args=[post_id]))
 
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'comment_form.html'
+
+    def form_valid(self, form):
+        form.instance.post_id = self.kwargs['post_id']
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('post_detail', kwargs={'pk': self.kwargs['post_id']})
+
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
     form_class = CommentForm
