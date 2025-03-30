@@ -1,8 +1,9 @@
-from rest_framework import status, generics
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import status, generics.GenericAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerializer, UserLoginSerializer, TokenSerializer
-from rest_framework.permissions import AllowAny, IsAuthenticated
+
 from .models import CustomUser
 from rest_framework.authtoken.models import Token
 
