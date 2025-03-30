@@ -1,27 +1,43 @@
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
+from .models import CustomUser
+from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 
-"Token.objects.create", "get_user_model().objects.create_user"
-
-User = get_user_model()
-
-class UserSerializer(serializers.Serializer):
-    username = serializers.CharField()
+class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
-    email = serializers.EmailField()
-    bio = serializers.CharField(allow_blank=True, required=False)
-    profile_picture = serializers.ImageField(allow_null=True, required=False)
+
+    class Meta:
+        model = CustomUser
+        fields = ('id', 'username', 'email', 'password', 'bio', 'profile_picture', 'followers')
+        read_only_fields = ('followers',)
 
     def create(self, validated_data):
-        return User.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password'],
-            bio=validated_data.get('bio', ''),
-            profile_picture=validated_data.get('profile_picture'),
-        )
+        password = validated_data.pop('password')
+        user = CustomUser(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
+
+class UserLoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True)
+
+    def validate(self, data):
+        username = data.get('username')
+        password = data.get('password')
+
+        if username and password:
+            user = authenticate(username=username, password=password)
+            if user:
+                if not user.is_active:
+                    raise serializers.ValidationError("User account is disabled.")
+                data['user'] = user
+            else:
+                raise serializers.ValidationError("Unable to log in with provided credentials.")
+        else:
+            raise serializers.ValidationError("Must include 'username' and 'password'")
+
+        return data
 
 class TokenSerializer(serializers.Serializer):
-    key = serializers.CharField(read_only=True)
-    user = serializers.PrimaryKeyRelatedField(read_only=True)
+    token = serializers.CharField()
